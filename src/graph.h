@@ -106,10 +106,7 @@ class Graph {
     VertexSet first = VertexSet(LexMinMaxAnticlique());
     queue.insert(first);
 
-    size_t cnt = 0;
-
     while (!queue.empty()) {
-      cnt += 1;
       auto it = queue.begin();
       VertexSet s = queue.extract(it).value();
       for (size_t j = s.MinVertex() + 1; j < n; ++j) {
@@ -119,16 +116,14 @@ class Graph {
           set_mask <<= (n - j - 1);
           set_mask &= (~adjacency_matrix_[j]);
           set_mask.set(j);
-          VertexSet t(LexMinMaxAnticlique(set_mask));
+          std::bitset<n> new_set_mask = LexMinMaxAnticlique(set_mask);
+          VertexSet t(std::move(new_set_mask));
           if (s < t) {
             queue.insert(std::move(t));
           }
         }
       }
       answer.push_back(std::move(s.Extract()));
-      if (cnt > 10) {
-        break;
-      }
     }
     return answer;
   }
