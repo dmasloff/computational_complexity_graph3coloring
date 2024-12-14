@@ -11,9 +11,23 @@ TeX-файлы со статьей доступны в директории `/te
 корня следующей последовательностью команд.
 
 ```shell
-mkdir build
-cd build
-cmake ..
-make test_graph
-./bin/test_graph
+mkdir -p build
+cmake -S . -B build
+make -C build test_graph
+./build/bin/test_graph
 ```
+
+### Бенчмарк
+
+Также в проекте есть бенчмарки, позволяющие оценить время работы алгоритма на графах из класса $G(n, p)$ - случайных графах
+в модели Эрдеша-Реньи. В тестах используется константа $p=\frac{1}{2}$. Для бенчмарков использован фреймворк
+[Google Benchmark](https://github.com/google/benchmark). Запуск из корня можно осуществить с помощью последовательности команд:
+
+```shell
+mkdir -p build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+make -C build profile_graph
+./build/bin/profile_graph
+```
+
+Для информативно бенчмарков рекомендуется собирать их в Release версии, поэтому инструкция немного отличает от сборки тестов.
