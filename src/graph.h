@@ -98,6 +98,32 @@ class Graph {
   Graph(std::vector<std::bitset<n>>&& adjacency_matrix)
     : adjacency_matrix_(std::move(adjacency_matrix)) {}
 
+  std::bitset<n> LexMinMaxAnticlique() const {
+    std::bitset<n> access;
+    for (size_t i = 0; i < n; ++i) {
+      if (!access[i]) {
+        access |= adjacency_matrix_[i];
+      }
+    }
+    access.flip();
+    return access;
+  }
+
+  std::bitset<n> LexMinMaxAnticlique(const std::bitset<n> &condition) const {
+    std::bitset<n> access;
+    for (size_t i = 0; i < n; ++i) {
+      if (condition[i]) {
+        access |= adjacency_matrix_[i];
+      }
+    }
+    for (size_t i = 0; i < n; ++i) {
+      if (!access[i]) {
+        access |= adjacency_matrix_[i];
+      }
+    }
+    access.flip();
+    return access;
+  }
 
   std::vector<std::bitset<n>> ListAllMaxAnticliques() const {
     std::vector<std::bitset<n>> answer;
@@ -144,33 +170,6 @@ class Graph {
 
  private:
   std::vector<std::bitset<n>> adjacency_matrix_;
-
-  std::bitset<n> LexMinMaxAnticlique() const {
-    std::bitset<n> access;
-    for (size_t i = 0; i < n; ++i) {
-      if (!access[i]) {
-        access |= adjacency_matrix_[i];
-      }
-    }
-    access.flip();
-    return access;
-  }
-
-  std::bitset<n> LexMinMaxAnticlique(const std::bitset<n>& condition) const {
-    std::bitset<n> access;
-    for (size_t i = 0; i < n; ++i) {
-      if (condition[i]) {
-        access |= adjacency_matrix_[i];
-      }
-    }
-    for (size_t i = 0; i < n; ++i) {
-      if (!access[i]) {
-        access |= adjacency_matrix_[i];
-      }
-    }
-    access.flip();
-    return access;
-  }
 
   bool CheckMaxAnticliqueOnPrefixConstraint(const VertexSet& vertex_set, size_t j) const {
     std::bitset<n> set_mask = vertex_set.View();
