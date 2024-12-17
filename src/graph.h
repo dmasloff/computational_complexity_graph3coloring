@@ -168,6 +168,22 @@ class Graph {
     return adjacency_matrix_;
   }
 
+  size_t VertexCount() const {
+    return n;
+  }
+
+  size_t EdgeCount() const {
+    size_t edges = 0;
+    for (size_t i = 1; i < n; ++i) {
+      for (size_t j = 0; j < i; ++j) {
+        if (adjacency_matrix_[i][j]) {
+          edges += 1;
+        }
+      }
+    }
+    return edges;
+  }
+
  private:
   std::vector<std::bitset<n>> adjacency_matrix_;
 

@@ -10,6 +10,7 @@ std::uniform_real_distribution<> distribution(0.0, 1.0);
 
 
 // Generates random graph G(n, p) from Erdos-Renyi model
+
 template<size_t n>
 Graph<n> GenerateRandomGraph(float p = 0.5) {
   std::vector<std::bitset<n>> adj_matrix(n);
@@ -27,9 +28,10 @@ Graph<n> GenerateRandomGraph(float p = 0.5) {
 
 template <size_t n>
 static void BM_Check3Coloring(benchmark::State& state) {
+  float p = static_cast<float>(state.range(0)) / 4.0;
   for (auto _ : state) {
     state.PauseTiming();
-    Graph<n> graph = GenerateRandomGraph<n>();
+    Graph<n> graph = GenerateRandomGraph<n>(p);
     state.ResumeTiming();
     bool is3col = graph.Check3Coloring();
     benchmark::DoNotOptimize(is3col);
@@ -37,6 +39,7 @@ static void BM_Check3Coloring(benchmark::State& state) {
   }
 }
 
+// Generates graph with the greatest number of maximal anticliques
 
 template <size_t n>
 Graph<n> GenerateMaxGraph() {
@@ -97,40 +100,46 @@ static void BM_Check3ColoringMaxAnticliques(benchmark::State& state) {
 
 // G(n, p) model tests
 
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 3ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 4ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 5ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 6ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 7ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 8ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 9ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 10ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 11ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 12ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 13ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 14ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 15ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 16ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 17ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 18ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 19ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 20ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 22ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 24ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 26ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 28ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 30ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 32ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 34ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 36ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 38ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 40ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 50ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 60ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 70ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 80ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 90ull);
-BENCHMARK_TEMPLATE(BM_Check3Coloring, 100ull);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 3ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 4ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 5ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 6ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 7ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 8ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 9ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 10ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 11ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 12ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 13ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 14ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 15ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 16ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 17ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 18ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 19ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 20ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 22ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 24ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 26ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 28ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 30ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 32ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 34ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 36ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 38ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 40ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 45ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 50ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 55ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 60ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 65ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 70ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 75ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 80ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 85ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 90ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 95ull)->Arg(1)->Arg(2)->Arg(3);
+BENCHMARK_TEMPLATE(BM_Check3Coloring, 100ull)->Arg(1)->Arg(2)->Arg(3);
 
 // Tests on graphs with maximal number of anticliques
 
@@ -165,5 +174,6 @@ BENCHMARK_TEMPLATE(BM_Check3ColoringMaxAnticliques, 40ull);
 BENCHMARK_TEMPLATE(BM_Check3ColoringMaxAnticliques, 50ull);
 BENCHMARK_TEMPLATE(BM_Check3ColoringMaxAnticliques, 60ull);
 BENCHMARK_TEMPLATE(BM_Check3ColoringMaxAnticliques, 70ull);
+BENCHMARK_TEMPLATE(BM_Check3ColoringMaxAnticliques, 80ull);
 
 BENCHMARK_MAIN();
